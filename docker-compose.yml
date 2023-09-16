@@ -1,0 +1,20 @@
+version: "3.7" #mendefisinikan scheme version 
+
+services: #mendefiniskan service apa saja
+  item-app: #membuat service item-app
+    image: ghcr.io/firmanputra908/item-app:v1 #menggunakan image item-app yang telah diupload dari github
+    ports: #menyatakan port yang akan dipakai
+      - 80:8080 #melakukan port mapping, agar host bisa akses via port 80
+    depends_on: #menunggu service item-db diluncurkan baru kemudian service item-app
+      - item-db #nama service item-db
+    restart: always #service akan selalu restart atau aktif kembali ketika mati
+
+  item-db: #membuat service item-db
+    image: mongo:3 #menggunakan base image mongo:3
+    volumes: #membuat volume
+      - app-db:/data/db #mount direktori app-db ke /data/db
+    restart: always #service akan selalu restart atau aktif kembali ketika mati
+
+volumes: #membuat volume
+  app-db: #mendefinisikan nama volume app-db
+
